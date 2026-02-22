@@ -10,6 +10,9 @@ on:
       - master
   workflow_dispatch: # 允许手动触发
 
+permissions:
+  contents: write
+
 jobs:
   update-rss:
     runs-on: ubuntu-latest
