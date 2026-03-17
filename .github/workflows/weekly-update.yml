@@ -2,8 +2,8 @@ name: Weekly RSS Update
 
 on:
   schedule:
-    # 每周四 UTC 时间 00:00 运行（北京时间 08:00）
-    - cron: '0 0 * * 4'
+    # 每天 UTC 时间 12:00 运行（中国东部时间 20:00）
+    - cron: '0 12 * * *'
   push:
     branches:
       - main
