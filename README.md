@@ -18,6 +18,7 @@
 ## 重要文章关键词
 
 包含以下关键词的文章会被自动标记为重要：
+
 - 注意事项
 - 选课
 - 公告
@@ -38,6 +39,7 @@
 ## 核心增强功能
 
 ### RSS内容特性
+
 - ✅ 显示**所有重要文章**
 - ✅ 使用**本地Markdown内容**作为文章正文
 - ✅ 当Markdown内容不可用时回退到基本元数据
@@ -46,6 +48,7 @@
 - ✅ 自动识别并显示PDF附件链接
 
 ### 服务器特性
+
 - ✅ **自动端口切换**：当4590端口被占用时自动查找可用端口
 - ✅ **优雅错误处理**：清晰的错误消息和恢复选项
 - ✅ **交互式菜单**：易于使用的命令行界面
@@ -65,9 +68,9 @@
 
 ## GitHub Actions 自动化
 
-本项目配置为在GitHub Actions上每周四自动运行：
+本项目配置为在GitHub Actions上每天自动运行：
 
-- **定时任务**：每周四 UTC 00:00（北京时间 08:00）
+- **定时任务**：每天 UTC 12:00（中国东部时间 20:00）
 - **工作流文件**：`.github/workflows/weekly-update.yml`
 - **执行操作**：
   1. 运行爬虫获取最新文章
@@ -78,6 +81,7 @@
 ### 手动触发
 
 你也可以从GitHub手动触发工作流：
+
 1. 进入仓库的 "Actions" 标签页
 2. 选择 "Weekly RSS Update" 工作流
 3. 点击 "Run workflow" 按钮
@@ -89,6 +93,7 @@
 ### GitHub Pages RSS订阅地址
 
 如果启用GitHub Pages，你的RSS订阅源将在以下地址可用：
+
 - **RSS 2.0**：`https://yourusername.github.io/glut_rss/rss/rss.xml`
 - **Atom**：`https://yourusername.github.io/glut_rss/rss/atom.xml`
 
@@ -97,21 +102,25 @@
 ## 使用方法
 
 ### 主爬虫程序
+
 ```bash
 python glut_news_scraper.py
 ```
 
 ### 归档管理工具
+
 ```bash
 python archive_manager.py
 ```
 
 ### RSS服务
+
 ```bash
 python local_rss_server.py
 ```
 
 ### RSS生成器（独立运行）
+
 ```bash
 python rss_generator.py
 ```
@@ -138,7 +147,8 @@ python rss_generator.py
 ├── glut_news_scraper.py      # 主爬虫脚本
 ├── archive_manager.py        # 归档管理工具
 ├── rss_generator.py          # RSS订阅源生成器
-└── local_rss_server.py       # 本地RSS Web服务器
+├── local_rss_server.py       # 本地RSS Web服务器
+└── robots.txt                # 搜索引擎爬虫控制文件
 ```
 
 ## RSS服务端点
@@ -151,6 +161,7 @@ python rss_generator.py
 - **服务状态**：`http://127.0.0.1:4590/status`
 
 **注意**：
+
 - RSS订阅源仅包含标记为重要的文章（包含指定关键词）
 - 显示所有重要文章（不限制数量）
 - 如果4590端口被占用，服务器会自动切换到可用端口
@@ -167,6 +178,7 @@ python rss_generator.py
 ### 归档组织方式
 
 旧文章会自动组织到以下目录：
+
 - `2024年上半年`（2024年上半年：1-6月）
 - `2024年下半年`（2024年下半年：7-12月）
 - `2025年上半年`（2025年上半年：1-6月）
@@ -175,6 +187,7 @@ python rss_generator.py
 ## 缓存结构
 
 文章在 `cache/` 目录中按日期缓存，每天一个文件：
+
 - 每个文件以日期格式命名：`YYYY-MM-DD.json`
 - 文件包含该日期文章的JSON数组
 - 每篇文章包含：标题、链接、日期、抓取时间戳和重要性标记
@@ -182,6 +195,7 @@ python rss_generator.py
 ## 文章处理流程
 
 重要文章会自动：
+
 1. 在列表中用 ⭐ 标记
 2. 下载为包含完整内容的Markdown文件
 3. 自动下载附件（PDF、DOCX等）
@@ -200,18 +214,24 @@ RSS订阅源中的文章内容根据以下规则显示：
 ## 故障排除
 
 ### 端口冲突
+
 如果遇到 "Address already in use" 错误：
+
 - 服务器会自动查找并切换到可用端口
 - 检查控制台输出以获取实际使用的端口
 - 相应更新RSS阅读器订阅URL
 
 ### Python版本问题
+
 对于Python版本问题：
+
 1. 确保你有 Python 3.6+
 2. 安装所需包：`pip install -r requirements.txt`
 
 ### RSS服务问题
+
 对于RSS服务问题：
+
 1. 检查服务器是否正在运行
 2. 验证 `rss/` 目录中是否生成了RSS文件
 3. 确认缓存文件中存在重要文章
@@ -219,7 +239,9 @@ RSS订阅源中的文章内容根据以下规则显示：
 5. 如果从外部网络访问，检查防火墙设置
 
 ### GitHub Actions权限问题
+
 如果GitHub Actions运行失败：
+
 1. 进入仓库的 Settings > Actions > General
 2. 找到 Workflow permissions 部分
 3. 选择 "Read and write permissions"
@@ -227,10 +249,25 @@ RSS订阅源中的文章内容根据以下规则显示：
 
 ## 项目文件说明
 
-- **glut_news_scraper.py**：主爬虫程序，负责从教务处网站抓取文章
-- **rss_generator.py**：RSS订阅源生成器，生成RSS 2.0和Atom格式
-- **archive_manager.py**：归档管理工具，提供缓存清理和文章归档功能
-- **local_rss_server.py**：本地RSS服务器，提供Web访问RSS订阅源
+- **glut\_news\_scraper.py**：主爬虫程序，负责从教务处网站抓取文章
+- **rss\_generator.py**：RSS订阅源生成器，生成RSS 2.0和Atom格式
+- **archive\_manager.py**：归档管理工具，提供缓存清理和文章归档功能
+- **local\_rss\_server.py**：本地RSS服务器，提供Web访问RSS订阅源
+- **robots.txt**：搜索引擎爬虫控制文件，禁止所有爬虫爬取网站
+
+## 搜索引擎优化（SEO）
+
+本项目包含 `robots.txt` 文件，用于防止网站被搜索引擎和AI爬虫爬取：
+
+```
+User-agent: *
+Disallow: /
+```
+
+这将：
+- 禁止所有搜索引擎索引网站内容
+- 防止AI爬虫爬取网站数据
+- 保护网站内容不被未经授权的爬虫访问
 
 ## 技术栈
 
@@ -250,6 +287,7 @@ RSS订阅源中的文章内容根据以下规则显示：
 ## 更新日志
 
 ### v2.0
+
 - 添加GitHub Actions自动化
 - 每周四自动更新RSS
 - 推送代码时自动运行
@@ -259,7 +297,9 @@ RSS订阅源中的文章内容根据以下规则显示：
 - 显示所有重要文章（不限制数量）
 
 ### v1.0
+
 - 初始版本
 - 基本爬虫功能
 - RSS订阅源生成
 - 本地服务器
+
