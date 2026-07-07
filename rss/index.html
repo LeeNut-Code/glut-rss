@@ -7,233 +7,300 @@
   <meta name="description" content="桂林理工大学教务处最新通知公告的 RSS / Atom 订阅源">
   <link rel="icon" href="https://ai.glut.edu.cn/assets/logo-BT23DgsH.svg">
   <style>
-    :root {
-      --bg: #f6f8fa;
-      --card: #ffffff;
-      --border: #e1e4e8;
-      --text: #24292e;
-      --muted: #586069;
-      --primary: #0366d6;
-      --primary-dark: #0056b3;
-      --accent: #f66a0a;
-      --code-bg: #f0f1f3;
-    }
-    @media (prefers-color-scheme: dark) {
-      :root {
-        --bg: #0d1117;
-        --card: #161b22;
-        --border: #30363d;
-        --text: #c9d1d9;
-        --muted: #8b949e;
-        --primary: #58a6ff;
-        --primary-dark: #1f6feb;
-        --accent: #f0883e;
-        --code-bg: #21262d;
-      }
-    }
-    * { box-sizing: border-box; }
+    * { margin: 0; padding: 0; box-sizing: border-box; list-style: none; }
     body {
-      margin: 0;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC",
-        "Hiragino Sans GB", "Microsoft YaHei", "Helvetica Neue", Arial, sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      line-height: 1.6;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 2rem 1rem 3rem;
+      font: 14px "微软雅黑", "Microsoft YaHei", Tahoma, Arial, sans-serif;
+      color: #333;
+      background: #f3f4f6;
+      line-height: 1.7;
     }
-    .container { width: 100%; max-width: 720px; }
-    header { text-align: center; margin-bottom: 2rem; }
-    .logo {
-      width: 72px; height: 72px;
-      margin-bottom: 1rem;
-      filter: drop-shadow(0 2px 6px rgba(0,0,0,0.08));
-    }
-    h1 {
-      font-size: 1.6rem;
-      margin: 0 0 0.5rem;
-      font-weight: 600;
-    }
-    header p { color: var(--muted); margin: 0; font-size: 0.95rem; }
+    a { color: #013989; text-decoration: none; }
+    a:hover { color: #e60012; text-decoration: underline; }
 
-    .card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 1.5rem;
-      margin-bottom: 1.25rem;
+    /* 顶部头图区——模仿教务处 .header */
+    .header {
+      background-color: #013989;
+      background: linear-gradient(135deg, #013989 0%, #0253b6 100%);
+      padding: 36px 0;
+      text-align: center;
+      color: #fff;
     }
-    .card h2 {
-      font-size: 1.05rem;
-      margin: 0 0 1rem;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
+    .header .logo {
+      width: 90px; height: 90px;
+      margin-bottom: 14px;
+      filter: drop-shadow(0 2px 8px rgba(0,0,0,0.2));
     }
-    .card h2::before {
-      content: "";
-      display: inline-block;
-      width: 4px; height: 1em;
-      background: var(--accent);
-      border-radius: 2px;
+    .header h1 {
+      font-size: 28px; font-weight: normal; letter-spacing: 2px;
+      margin-bottom: 8px;
     }
+    .header p { font-size: 14px; opacity: 0.9; }
 
-    .feed-list { display: flex; flex-direction: column; gap: 0.75rem; }
+    /* 导航条——模仿教务处 .nav */
+    .nav {
+      background-color: #013989;
+      border-top: 1px solid rgba(255,255,255,0.15);
+    }
+    .nav ul { text-align: center; font-size: 0; max-width: 1010px; margin: 0 auto; }
+    .nav li { display: inline-block; }
+    .nav a.nav-item {
+      font-size: 16px; color: #fff; line-height: 48px;
+      padding: 0 22px; display: block; font-weight: normal;
+      transition: background 0.2s;
+    }
+    .nav a.nav-item:hover { background: rgba(255,255,255,0.15); text-decoration: none; color: #fff; }
+
+    /* 主体容器 */
+    .wrap { max-width: 1010px; margin: 0 auto; padding: 28px 16px 48px; }
+
+    .block {
+      background: #fff;
+      border: 1px solid #e1e4e8;
+      border-top: 3px solid #013989;
+      margin-bottom: 22px;
+      padding: 24px 28px;
+    }
+    .block h2 {
+      font-size: 20px; color: #013989; font-weight: normal;
+      margin-bottom: 16px; padding-bottom: 10px;
+      border-bottom: 1px dashed #d0d7de;
+      position: relative;
+    }
+    .block h2::before {
+      content: ""; display: inline-block;
+      width: 6px; height: 20px; background: #013989;
+      margin-right: 10px; vertical-align: -3px;
+    }
+    .block p { margin-bottom: 12px; color: #444; }
+    .block p:last-child { margin-bottom: 0; }
+
+    /* 订阅源卡片 */
+    .feeds { display: flex; flex-direction: column; gap: 14px; }
     .feed-item {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 1rem;
-      padding: 0.85rem 1rem;
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      background: var(--bg);
-      transition: border-color 0.15s, transform 0.05s;
+      display: flex; align-items: center; justify-content: space-between; gap: 16px;
+      padding: 16px 18px;
+      border: 1px solid #e1e4e8;
+      background: #fafbfc;
+      transition: border-color 0.15s, box-shadow 0.15s;
     }
-    .feed-item:hover { border-color: var(--primary); }
-    .feed-item:active { transform: translateY(1px); }
+    .feed-item:hover { border-color: #013989; box-shadow: 0 1px 6px rgba(1,57,137,0.08); }
     .feed-item .info { min-width: 0; }
-    .feed-item .name { font-weight: 600; font-size: 0.95rem; }
+    .feed-item .name { font-size: 16px; font-weight: 600; color: #013989; margin-bottom: 4px; }
     .feed-item .url {
-      color: var(--muted);
-      font-size: 0.8rem;
-      font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+      color: #666; font-size: 12px;
+      font-family: Consolas, Monaco, monospace;
       word-break: break-all;
-      margin-top: 2px;
     }
-    .feed-item .copy-btn {
-      flex-shrink: 0;
-      padding: 0.4rem 0.75rem;
-      font-size: 0.8rem;
-      background: var(--card);
-      color: var(--primary);
-      border: 1px solid var(--primary);
-      border-radius: 5px;
-      cursor: pointer;
-      transition: background 0.15s, color 0.15s;
+    .copy-btn {
+      flex-shrink: 0; padding: 7px 16px; font-size: 13px;
+      background: #013989; color: #fff;
+      border: none; border-radius: 3px; cursor: pointer;
+      transition: background 0.15s;
     }
-    .feed-item .copy-btn:hover { background: var(--primary); color: #fff; }
-    .feed-item .copy-btn.copied { background: #28a745; border-color: #28a745; color: #fff; }
+    .copy-btn:hover { background: #0253b6; }
+    .copy-btn.copied { background: #1a7f37; }
 
-    .desc { font-size: 0.92rem; color: var(--muted); margin: 0; }
-    .desc strong { color: var(--text); }
+    /* 建议区块 */
+    .suggest-card {
+      border-left: 4px solid #013989;
+      padding: 14px 18px;
+      background: #f0f5ff;
+      margin-bottom: 12px;
+    }
+    .suggest-card:last-child { margin-bottom: 0; }
+    .suggest-card .tag {
+      display: inline-block; font-size: 12px; padding: 2px 10px;
+      background: #013989; color: #fff; border-radius: 2px; margin-right: 8px;
+      vertical-align: 2px;
+    }
+    .suggest-card.alt .tag { background: #e60012; }
+    .suggest-card.alt { border-left-color: #e60012; background: #fff5f5; }
+    .suggest-card strong { color: #013989; }
+    .suggest-card.alt strong { color: #e60012; }
+
+    code {
+      background: #f0f1f3; padding: 1px 6px; border-radius: 2px;
+      font-family: Consolas, Monaco, monospace; font-size: 13px;
+      color: #c7254e;
+    }
 
     .readers {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-      gap: 0.6rem;
-      margin-top: 0.5rem;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 12px; margin-top: 8px;
     }
     .reader {
-      display: block;
-      text-align: center;
-      padding: 0.6rem 0.5rem;
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      text-decoration: none;
-      color: var(--text);
-      font-size: 0.85rem;
-      background: var(--bg);
-      transition: border-color 0.15s, color 0.15s;
+      display: block; text-align: center;
+      padding: 10px; border: 1px solid #d0d7de;
+      color: #013989; font-size: 14px; background: #fff;
+      transition: all 0.15s;
     }
-    .reader:hover { border-color: var(--primary); color: var(--primary); }
+    .reader:hover { background: #013989; color: #fff; text-decoration: none; border-color: #013989; }
 
-    code {
-      background: var(--code-bg);
-      padding: 0.1em 0.35em;
-      border-radius: 3px;
-      font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
-      font-size: 0.88em;
+    /* 免责声明——折叠样式 */
+    .disclaimer {
+      background: #fff8e1;
+      border: 1px solid #ffe082;
+      border-left: 4px solid #f5a623;
+      padding: 0 22px;
+      margin-bottom: 22px;
+      font-size: 13px; color: #5d4e1a;
     }
+    .disclaimer .toggle-btn {
+      display: block; width: 100%;
+      background: none; border: none; cursor: pointer;
+      padding: 14px 0;
+      font-size: 17px; font-weight: 600; color: #b8860b;
+      text-align: left;
+      position: relative;
+    }
+    .disclaimer .toggle-btn::after {
+      content: "展开 ▸";
+      font-size: 12px; font-weight: normal;
+      color: #b8860b; margin-left: 8px;
+      transition: transform 0.2s;
+    }
+    .disclaimer.open .toggle-btn::after { content: "收起 ▾"; }
+    .disclaimer .content {
+      max-height: 0; overflow: hidden;
+      transition: max-height 0.25s ease, padding 0.25s ease;
+    }
+    .disclaimer.open .content {
+      max-height: 300px;
+      padding-bottom: 18px;
+    }
+    .disclaimer .content p { margin-bottom: 8px; color: #5d4e1a; }
+    .disclaimer .content p:last-child { margin-bottom: 0; }
 
-    footer {
+    /* 页脚——模仿教务处 .footer */
+    .footer {
+      background-color: #013989;
+      color: rgba(255,255,255,0.85);
       text-align: center;
-      color: var(--muted);
-      font-size: 0.8rem;
-      margin-top: 2rem;
+      padding: 24px 16px;
+      font-size: 13px;
+      line-height: 2;
     }
-    footer a { color: var(--primary); text-decoration: none; }
+    .footer a { color: #ffd700; }
+    .footer a:hover { color: #fff; }
+    .footer .links a { margin: 0 10px; }
 
     .toast {
-      position: fixed;
-      bottom: 2rem;
-      left: 50%;
+      position: fixed; bottom: 30px; left: 50%;
       transform: translateX(-50%) translateY(120%);
-      background: #24292e;
-      color: #fff;
-      padding: 0.6rem 1.2rem;
-      border-radius: 6px;
-      font-size: 0.85rem;
-      opacity: 0;
-      transition: transform 0.25s ease, opacity 0.25s ease;
-      pointer-events: none;
-      z-index: 50;
+      background: #013989; color: #fff;
+      padding: 10px 22px; border-radius: 3px;
+      font-size: 14px; opacity: 0;
+      transition: transform 0.25s, opacity 0.25s;
+      pointer-events: none; z-index: 50;
     }
     .toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+
+    @media (max-width: 640px) {
+      .header h1 { font-size: 22px; }
+      .nav a.nav-item { font-size: 14px; padding: 0 14px; }
+      .feed-item { flex-direction: column; align-items: stretch; }
+      .copy-btn { width: 100%; }
+    }
   </style>
 </head>
 <body>
-  <div class="container">
-    <header>
-      <img class="logo" src="https://ai.glut.edu.cn/assets/logo-BT23DgsH.svg" alt="GLUT">
-      <h1>桂林理工大学教务处通知</h1>
-      <p>教务处最新通知公告 RSS / Atom 订阅源</p>
-    </header>
+  <!-- 顶部头部 -->
+  <div class="header">
+    <img class="logo" src="https://ai.glut.edu.cn/assets/logo-BT23DgsH.svg" alt="GLUT">
+    <h1>桂林理工大学教务处通知</h1>
+    <p>教务处最新通知公告 RSS / Atom 订阅源 · 每日自动更新</p>
+  </div>
 
-    <section class="card">
+  <!-- 导航条 -->
+  <div class="nav">
+    <ul>
+      <li><a class="nav-item" href="#subscribe">订阅地址</a></li>
+      <li><a class="nav-item" href="#about">关于本站</a></li>
+      <li><a class="nav-item" href="#suggest">使用建议</a></li>
+      <li><a class="nav-item" href="#readers">阅读器</a></li>
+      <li><a class="nav-item" href="#disclaimer">免责声明</a></li>
+      <li><a class="nav-item" href="https://github.com/LeeNut-Code/glut-rss" target="_blank" rel="noopener">项目仓库</a></li>
+    </ul>
+  </div>
+
+  <div class="wrap">
+
+    <!-- 免责声明（默认折叠） -->
+    <div class="disclaimer" id="disclaimer">
+      <button class="toggle-btn" onclick="this.parentElement.classList.toggle('open')">⚠ 免责声明</button>
+      <div class="content">
+        <p>本项目及其 RSS 订阅服务由<strong>本校学生</strong>个人开发与维护，<strong>与桂林理工大学及其教务处无任何关联</strong>，亦未获其授权或背书。</p>
+        <p>项目仅对教务处公开发布的通知进行抓取与聚合，不代表学校官方立场。使用本项目所产生的一切责任与风险，<strong>由使用者及开发者自行承担</strong>，与桂林理工大学及其教务处无关。</p>
+      </div>
+    </div>
+
+    <!-- 订阅地址 -->
+    <div class="block" id="subscribe">
       <h2>订阅地址</h2>
-      <div class="feed-list">
+      <p>复制下方任一订阅地址，粘贴到你的 RSS 阅读器中即可订阅。</p>
+      <div class="feeds" style="margin-top:14px;">
         <div class="feed-item">
           <div class="info">
             <div class="name">RSS 2.0</div>
-            <div class="url" id="rss-url">https://leenut-code.github.io/glut-rss/rss/rss.xml</div>
+            <div class="url">https://glut-rss.pages.dev/rss.xml</div>
           </div>
-          <button class="copy-btn" data-copy="https://leenut-code.github.io/glut-rss/rss/rss.xml">复制</button>
+          <button class="copy-btn" data-copy="https://glut-rss.pages.dev/rss.xml">复制地址</button>
         </div>
         <div class="feed-item">
           <div class="info">
             <div class="name">Atom 1.0</div>
-            <div class="url">https://leenut-code.github.io/glut-rss/rss/atom.xml</div>
+            <div class="url">https://glut-rss.pages.dev/atom.xml</div>
           </div>
-          <button class="copy-btn" data-copy="https://leenut-code.github.io/glut-rss/rss/atom.xml">复制</button>
+          <button class="copy-btn" data-copy="https://glut-rss.pages.dev/atom.xml">复制地址</button>
         </div>
       </div>
-    </section>
+    </div>
 
-    <section class="card">
+    <!-- 关于本站 -->
+    <div class="block" id="about">
       <h2>关于本订阅</h2>
-      <p class="desc">
-        本订阅源自动抓取 <strong>桂林理工大学教务处</strong>（jwc.glut.edu.cn）通知公告，
-        按关键词筛选出与学生学业相关的<strong>重要通知</strong>（如选课、考试、毕业、报名、证书办理等），
-        并排除监考发车安排等次要信息，每日自动更新。
-      </p>
-    </section>
+      <p>本订阅源自动抓取 <strong>桂林理工大学教务处</strong>（jwc.glut.edu.cn）发布的通知公告，按关键词筛选出与学生学业相关的<strong>重要通知</strong>，例如：选课、考试、毕业论文、报名、证书办理、缓考重修、实习答辩等。</p>
+      <p>同时通过负向关键词排除监考发车时间安排等次要信息，让通知更聚焦、更实用。系统每日自动运行，及时推送最新通知到你的阅读器。</p>
+    </div>
 
-    <section class="card">
-      <h2>一键订阅到阅读器</h2>
-      <div class="readers">
-        <a class="reader" href="https://rsshub.app/subscribe?url=https%3A%2F%2Fleenut-code.github.io%2Fglut-rss%2Frss%2Frss.xml" target="_blank" rel="noopener">RSSHub</a>
-        <a class="reader" href="feed://leenut-code.github.io/glut-rss/rss/rss.xml">系统默认</a>
-        <a class="reader" href="https://leenut-code.github.io/glut-rss/rss/rss.xml" target="_blank" rel="noopener">直接打开</a>
+    <!-- 使用建议 -->
+    <div class="block" id="suggest">
+      <h2>使用建议</h2>
+      <div class="suggest-card">
+        <span class="tag">普通学生</span>
+        <p>如果你只是希望及时收到教务处的<strong>重要通知</strong>（选课、考试、毕业等），<strong>直接订阅本项目的 RSS 即可</strong>，无需任何额外操作。复制上方订阅地址到阅读器即可使用。</p>
       </div>
-    </section>
+      <div class="suggest-card alt">
+        <span class="tag">教师 / 进阶用户</span>
+        <p>如果你是教师，或是有其他筛选需求的学生，建议<strong>复刻（Fork）本项目</strong>，修改 <code>keywords.json</code> 中的关键词配置后<strong>自行部署</strong>到自己的 GitHub Pages，以获得更贴合自身需求的订阅内容。</p>
+      </div>
+    </div>
 
-    <section class="card">
-      <h2>使用方法</h2>
-      <p class="desc">
-        复制上方任一订阅地址，粘贴到你的 RSS 阅读器（如
-        <strong>NetNewsWire</strong>、<strong>Feedly</strong>、<strong>Inoreader</strong>、
-        <strong>Reeder</strong>、<strong>Netptop</strong> 等）的「添加订阅」中即可。
-      </p>
-    </section>
+    <!-- 阅读器 -->
+    <div class="block" id="readers">
+      <h2>常用 RSS 阅读器</h2>
+      <p>推荐使用以下阅读器订阅（任选其一）：</p>
+      <div class="readers">
+        <a class="reader" href="https://rsshub.app/subscribe?url=https%3A%2F%2Fglut-rss.pages.dev%2Frss.xml" target="_blank" rel="noopener">RSSHub</a>
+        <a class="reader" href="https://feedly.com" target="_blank" rel="noopener">Feedly</a>
+        <a class="reader" href="https://www.inoreader.com" target="_blank" rel="noopener">Inoreader</a>
+        <a class="reader" href="feed://glut-rss.pages.dev/rss.xml">系统默认</a>
+      </div>
+      <p style="margin-top:14px; font-size:13px; color:#666;">也可使用 NetNewsWire、Reeder 等本地阅读器，复制订阅地址添加即可。</p>
+    </div>
 
-    <footer>
-      <p>数据来源：<a href="https://jwc.glut.edu.cn/xwzx/tzgg.htm" target="_blank" rel="noopener">桂林理工大学教务处 · 通知公告</a></p>
-      <p>本页面为静态订阅引导页，内容由程序自动维护，无需手动更新。</p>
-    </footer>
+  </div>
+
+  <!-- 页脚 -->
+  <div class="footer">
+    <div class="links">
+      <a href="https://github.com/LeeNut-Code/glut-rss" target="_blank" rel="noopener">GitHub 项目仓库</a>
+      <a href="https://glut-rss.pages.dev/rss.xml" target="_blank" rel="noopener">RSS 订阅</a>
+      <a href="https://jwc.glut.edu.cn/xwzx/tzgg.htm" target="_blank" rel="noopener">教务处通知公告</a>
+    </div>
+    <p>数据来源：桂林理工大学教务处公开通知 · 本项目由本校学生个人开发维护</p>
+    <p>本项目与桂林理工大学及其教务处无关，使用风险自担</p>
   </div>
 
   <div class="toast" id="toast">已复制到剪贴板</div>
@@ -255,25 +322,18 @@
           }, 1500);
         };
         if (navigator.clipboard && navigator.clipboard.writeText) {
-          navigator.clipboard.writeText(url).then(done).catch(function () {
-            fallbackCopy(url, done);
-          });
+          navigator.clipboard.writeText(url).then(done).catch(function () { fallbackCopy(url, done); });
         } else {
           fallbackCopy(url, done);
         }
       });
     });
-
     function fallbackCopy(text, cb) {
       var ta = document.createElement('textarea');
-      ta.value = text;
-      ta.style.position = 'fixed';
-      ta.style.opacity = '0';
-      document.body.appendChild(ta);
-      ta.select();
+      ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+      document.body.appendChild(ta); ta.select();
       try { document.execCommand('copy'); } catch (e) {}
-      document.body.removeChild(ta);
-      cb();
+      document.body.removeChild(ta); cb();
     }
   </script>
 </body>
