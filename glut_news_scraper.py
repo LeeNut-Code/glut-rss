@@ -8,8 +8,28 @@ from urllib.parse import urljoin, urlparse
 import re
 import hashlib
 
-# 重要关键词列表
-IMPORTANT_KEYWORDS = ['注意事项', '选课', '公告', '毕业论文', '毕业设计', '课表', '考试', '开课信息', '学位证书', '毕业', '报名', '证书', '缓考', '重修', '答辩', '实习', '停开']
+# 关键词配置文件路径
+KEYWORDS_CONFIG_FILE = 'keywords.json'
+
+# 配置文件缺失或格式错误时的默认关键词
+DEFAULT_IMPORTANT_KEYWORDS = ['注意事项', '选课', '公告', '毕业论文', '毕业设计', '课表', '考试', '开课信息', '学位证书', '毕业', '报名', '证书', '缓考', '重修', '答辩', '实习', '停开', '证明材料']
+DEFAULT_NEGATIVE_KEYWORDS = ['发车时间']
+
+def load_keywords():
+    """从 keywords.json 加载关键词配置，文件缺失或解析失败时回退到默认值"""
+    try:
+        config_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), KEYWORDS_CONFIG_FILE)
+        with open(config_path, 'r', encoding='utf-8') as f:
+            config = json.load(f)
+        important = config.get('important_keywords', DEFAULT_IMPORTANT_KEYWORDS)
+        negative = config.get('negative_keywords', DEFAULT_NEGATIVE_KEYWORDS)
+        return important, negative
+    except (FileNotFoundError, json.JSONDecodeError) as e:
+        print(f"⚠️  加载关键词配置失败，使用默认值: {e}")
+        return DEFAULT_IMPORTANT_KEYWORDS, DEFAULT_NEGATIVE_KEYWORDS
+
+# 模块加载时读取一次关键词配置
+IMPORTANT_KEYWORDS, NEGATIVE_KEYWORDS = load_keywords()
 
 def parse_article_date(date_string):
     """解析日期字符串，返回datetime对象"""
@@ -27,6 +47,9 @@ def parse_article_date(date_string):
 
 def is_important_article(title):
     """判断文章是否为重要文章"""
+    # 命中负向关键词则直接排除
+    if any(keyword in title for keyword in NEGATIVE_KEYWORDS):
+        return False
     return any(keyword in title for keyword in IMPORTANT_KEYWORDS)
 
 def sanitize_filename(filename):

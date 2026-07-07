@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>桂林理工大学教务处通知 - RSS 订阅</title>
+  <meta name="description" content="桂林理工大学教务处最新通知公告的 RSS / Atom 订阅源">
+  <link rel="icon" href="https://ai.glut.edu.cn/assets/logo-BT23DgsH.svg">
+  <style>
+    :root {
+      --bg: #f6f8fa;
+      --card: #ffffff;
+      --border: #e1e4e8;
+      --text: #24292e;
+      --muted: #586069;
+      --primary: #0366d6;
+      --primary-dark: #0056b3;
+      --accent: #f66a0a;
+      --code-bg: #f0f1f3;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #0d1117;
+        --card: #161b22;
+        --border: #30363d;
+        --text: #c9d1d9;
+        --muted: #8b949e;
+        --primary: #58a6ff;
+        --primary-dark: #1f6feb;
+        --accent: #f0883e;
+        --code-bg: #21262d;
+      }
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC",
+        "Hiragino Sans GB", "Microsoft YaHei", "Helvetica Neue", Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 2rem 1rem 3rem;
+    }
+    .container { width: 100%; max-width: 720px; }
+    header { text-align: center; margin-bottom: 2rem; }
+    .logo {
+      width: 72px; height: 72px;
+      margin-bottom: 1rem;
+      filter: drop-shadow(0 2px 6px rgba(0,0,0,0.08));
+    }
+    h1 {
+      font-size: 1.6rem;
+      margin: 0 0 0.5rem;
+      font-weight: 600;
+    }
+    header p { color: var(--muted); margin: 0; font-size: 0.95rem; }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.5rem;
+      margin-bottom: 1.25rem;
+    }
+    .card h2 {
+      font-size: 1.05rem;
+      margin: 0 0 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .card h2::before {
+      content: "";
+      display: inline-block;
+      width: 4px; height: 1em;
+      background: var(--accent);
+      border-radius: 2px;
+    }
+
+    .feed-list { display: flex; flex-direction: column; gap: 0.75rem; }
+    .feed-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 0.85rem 1rem;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      background: var(--bg);
+      transition: border-color 0.15s, transform 0.05s;
+    }
+    .feed-item:hover { border-color: var(--primary); }
+    .feed-item:active { transform: translateY(1px); }
+    .feed-item .info { min-width: 0; }
+    .feed-item .name { font-weight: 600; font-size: 0.95rem; }
+    .feed-item .url {
+      color: var(--muted);
+      font-size: 0.8rem;
+      font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+      word-break: break-all;
+      margin-top: 2px;
+    }
+    .feed-item .copy-btn {
+      flex-shrink: 0;
+      padding: 0.4rem 0.75rem;
+      font-size: 0.8rem;
+      background: var(--card);
+      color: var(--primary);
+      border: 1px solid var(--primary);
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background 0.15s, color 0.15s;
+    }
+    .feed-item .copy-btn:hover { background: var(--primary); color: #fff; }
+    .feed-item .copy-btn.copied { background: #28a745; border-color: #28a745; color: #fff; }
+
+    .desc { font-size: 0.92rem; color: var(--muted); margin: 0; }
+    .desc strong { color: var(--text); }
+
+    .readers {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 0.6rem;
+      margin-top: 0.5rem;
+    }
+    .reader {
+      display: block;
+      text-align: center;
+      padding: 0.6rem 0.5rem;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      text-decoration: none;
+      color: var(--text);
+      font-size: 0.85rem;
+      background: var(--bg);
+      transition: border-color 0.15s, color 0.15s;
+    }
+    .reader:hover { border-color: var(--primary); color: var(--primary); }
+
+    code {
+      background: var(--code-bg);
+      padding: 0.1em 0.35em;
+      border-radius: 3px;
+      font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+      font-size: 0.88em;
+    }
+
+    footer {
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.8rem;
+      margin-top: 2rem;
+    }
+    footer a { color: var(--primary); text-decoration: none; }
+
+    .toast {
+      position: fixed;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%) translateY(120%);
+      background: #24292e;
+      color: #fff;
+      padding: 0.6rem 1.2rem;
+      border-radius: 6px;
+      font-size: 0.85rem;
+      opacity: 0;
+      transition: transform 0.25s ease, opacity 0.25s ease;
+      pointer-events: none;
+      z-index: 50;
+    }
+    .toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <img class="logo" src="https://ai.glut.edu.cn/assets/logo-BT23DgsH.svg" alt="GLUT">
+      <h1>桂林理工大学教务处通知</h1>
+      <p>教务处最新通知公告 RSS / Atom 订阅源</p>
+    </header>
+
+    <section class="card">
+      <h2>订阅地址</h2>
+      <div class="feed-list">
+        <div class="feed-item">
+          <div class="info">
+            <div class="name">RSS 2.0</div>
+            <div class="url" id="rss-url">https://leenut-code.github.io/glut-rss/rss/rss.xml</div>
+          </div>
+          <button class="copy-btn" data-copy="https://leenut-code.github.io/glut-rss/rss/rss.xml">复制</button>
+        </div>
+        <div class="feed-item">
+          <div class="info">
+            <div class="name">Atom 1.0</div>
+            <div class="url">https://leenut-code.github.io/glut-rss/rss/atom.xml</div>
+          </div>
+          <button class="copy-btn" data-copy="https://leenut-code.github.io/glut-rss/rss/atom.xml">复制</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>关于本订阅</h2>
+      <p class="desc">
+        本订阅源自动抓取 <strong>桂林理工大学教务处</strong>（jwc.glut.edu.cn）通知公告，
+        按关键词筛选出与学生学业相关的<strong>重要通知</strong>（如选课、考试、毕业、报名、证书办理等），
+        并排除监考发车安排等次要信息，每日自动更新。
+      </p>
+    </section>
+
+    <section class="card">
+      <h2>一键订阅到阅读器</h2>
+      <div class="readers">
+        <a class="reader" href="https://rsshub.app/subscribe?url=https%3A%2F%2Fleenut-code.github.io%2Fglut-rss%2Frss%2Frss.xml" target="_blank" rel="noopener">RSSHub</a>
+        <a class="reader" href="feed://leenut-code.github.io/glut-rss/rss/rss.xml">系统默认</a>
+        <a class="reader" href="https://leenut-code.github.io/glut-rss/rss/rss.xml" target="_blank" rel="noopener">直接打开</a>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>使用方法</h2>
+      <p class="desc">
+        复制上方任一订阅地址，粘贴到你的 RSS 阅读器（如
+        <strong>NetNewsWire</strong>、<strong>Feedly</strong>、<strong>Inoreader</strong>、
+        <strong>Reeder</strong>、<strong>Netptop</strong> 等）的「添加订阅」中即可。
+      </p>
+    </section>
+
+    <footer>
+      <p>数据来源：<a href="https://jwc.glut.edu.cn/xwzx/tzgg.htm" target="_blank" rel="noopener">桂林理工大学教务处 · 通知公告</a></p>
+      <p>本页面为静态订阅引导页，内容由程序自动维护，无需手动更新。</p>
+    </footer>
+  </div>
+
+  <div class="toast" id="toast">已复制到剪贴板</div>
+
+  <script>
+    document.querySelectorAll('.copy-btn').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var url = btn.getAttribute('data-copy');
+        var done = function () {
+          var orig = btn.textContent;
+          btn.textContent = '已复制';
+          btn.classList.add('copied');
+          var toast = document.getElementById('toast');
+          toast.classList.add('show');
+          setTimeout(function () {
+            btn.textContent = orig;
+            btn.classList.remove('copied');
+            toast.classList.remove('show');
+          }, 1500);
+        };
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(url).then(done).catch(function () {
+            fallbackCopy(url, done);
+          });
+        } else {
+          fallbackCopy(url, done);
+        }
+      });
+    });
+
+    function fallbackCopy(text, cb) {
+      var ta = document.createElement('textarea');
+      ta.value = text;
+      ta.style.position = 'fixed';
+      ta.style.opacity = '0';
+      document.body.appendChild(ta);
+      ta.select();
+      try { document.execCommand('copy'); } catch (e) {}
+      document.body.removeChild(ta);
+      cb();
+    }
+  </script>
+</body>
+</html>
